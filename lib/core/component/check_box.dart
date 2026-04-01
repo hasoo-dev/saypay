@@ -56,7 +56,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
               border: Border.all(
                 color: isChecked
                     ? const Color.fromARGB(255, 244, 244, 183)
-                    : Colors.grey.withOpacity(0.4),
+                    : Colors.grey.withValues(alpha: 0.4),
                 width: 1.5,
               ),
             ),
@@ -68,7 +68,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
           Text(
             widget.label,
             style: TextStyle(
-              color: Colors.black.withOpacity(0.6),
+              color: Colors.black.withValues(alpha: 0.6),
               fontSize: 14,
             ),
           ),

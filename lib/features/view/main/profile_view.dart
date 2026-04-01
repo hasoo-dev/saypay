@@ -19,14 +19,16 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final AuthService _authService = AuthService();
-  final CurrencyController _currencyController = Get.put(CurrencyController(), permanent: true);
+  final CurrencyController _currencyController = Get.put(
+    CurrencyController(),
+    permanent: true,
+  );
 
   @override
   Widget build(BuildContext context) {
     final user = SessionController.userModel;
     final userName = user?.fullName ?? "Unknown";
     final userEmail = user?.email ?? "sofia@gmail.com";
-    final avatarUrl = user?.avatarUrl ?? "";
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -49,19 +51,22 @@ class _ProfileViewState extends State<ProfileView> {
                       width: 3,
                     ),
                   ),
-                  child: CircleAvatar(
-                    radius: 66,
-                    backgroundColor: Colors.grey.shade200,
-                    backgroundImage: avatarUrl.isNotEmpty
-                        ? NetworkImage(avatarUrl)
-                        : const AssetImage(AppConstant.profile)
-                              as ImageProvider,
+                  child: Obx(
+                    () => CircleAvatar(
+                      radius: 66,
+                      backgroundColor: Colors.grey.shade200,
+                      backgroundImage:
+                          SessionController.to.avatarUrl.value.isNotEmpty
+                          ? NetworkImage(SessionController.to.avatarUrl.value)
+                          : const AssetImage(AppConstant.profile)
+                                as ImageProvider,
+                    ),
                   ),
                 ),
                 0.04.hSpace,
                 Column(
-                  mainAxisAlignment: .center,
-                  crossAxisAlignment: .center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       userName,
@@ -71,8 +76,6 @@ class _ProfileViewState extends State<ProfileView> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                         letterSpacing: -0.5,
-                         
-                        
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -124,20 +127,22 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
 
                       const ProfileSectionHeader(title: "Preferences"),
-                      Obx(() => ProfileMenuItem(
-                        icon: Icons.attach_money_rounded,
-                        title: "Currency",
-                        trailingText: _currencyController.selectedCurrency.value,
-                        iconColor: Colors.green.shade600,
-                        onTap: () => Get.toNamed(RoutesConstant.currency),
-                      )),
+                      Obx(
+                        () => ProfileMenuItem(
+                          icon: Icons.attach_money_rounded,
+                          title: "Currency",
+                          trailingText:
+                              _currencyController.selectedCurrency.value,
+                          iconColor: Colors.green.shade600,
+                          onTap: () => Get.toNamed(RoutesConstant.currency),
+                        ),
+                      ),
                       ProfileMenuItem(
                         icon: Icons.palette_outlined,
                         title: "Theme",
                         iconColor: Colors.deepPurple.shade400,
                         onTap: () => Get.toNamed(RoutesConstant.theme),
                       ),
-
 
                       const ProfileSectionHeader(title: "Data & Privacy"),
                       ProfileMenuItem(
@@ -153,13 +158,6 @@ class _ProfileViewState extends State<ProfileView> {
                         onTap: () => Get.toNamed(RoutesConstant.backup),
                       ),
 
-                      // const ProfileSectionHeader(title: "Support"),
-                      // ProfileMenuItem(
-                      //   icon: Icons.help_outline_rounded,
-                      //   title: "Help",
-                      //   iconColor: Colors.blueGrey.shade500,
-                      //   onTap: () {},
-                      // ),
                       ProfileMenuItem(
                         icon: Icons.info_outline_rounded,
                         title: "About Spendly",

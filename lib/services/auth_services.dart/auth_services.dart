@@ -245,7 +245,6 @@ class AuthService extends GetxController {
     super.onClose();
   }
 
-  @override
   void onClear() {
     AppLogger.debug('Clearing form controllers', tag: 'LIFECYCLE');
     registerFullNameController.clear();

@@ -92,8 +92,10 @@ class SessionController extends GetxController {  // ✅ extend GetxController
   
   static SessionController get to => Get.find();  // ✅ singleton getter
 
-  // ✅ Reactive avatar URL
+  // ✅ Reactive user details
   final RxString avatarUrl = ''.obs;
+  final RxString fullName = ''.obs;
+  final RxString email = ''.obs;
 
   // Simple session variables
   static bool? isLogin;
@@ -109,6 +111,8 @@ class SessionController extends GetxController {  // ✅ extend GetxController
     userData = user.toJson();
     isLogin = true;
     avatarUrl.value = user.avatarUrl ?? '';  // ✅ triggers Obx rebuild
+    fullName.value = user.fullName ?? '';
+    email.value = user.email;
 
     await sharedPreferenceClass.setValue('user_model', userJson);
     await sharedPreferenceClass.setValue('isLogin', 'true');
@@ -142,6 +146,8 @@ class SessionController extends GetxController {  // ✅ extend GetxController
         userModel = UserModel.fromJson(jsonDecode(modelJson));
         userData = userModel?.toJson();
         avatarUrl.value = userModel?.avatarUrl ?? '';  // ✅ load on app start
+        fullName.value = userModel?.fullName ?? '';
+        email.value = userModel?.email ?? '';
       }
     } catch (e) {
       debugPrint("Session Error: $e");
@@ -159,5 +165,7 @@ class SessionController extends GetxController {  // ✅ extend GetxController
     userModel = null;
     userData = null;
     avatarUrl.value = '';  // ✅ clear on logout
+    fullName.value = '';
+    email.value = '';
   }
 }

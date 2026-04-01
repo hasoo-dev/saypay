@@ -97,6 +97,8 @@ class _OnBoardViewState extends State<OnBoardView> {
                     ),
                   ),
                   InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     onTap: () async {
                       if (currentIndex == onboardingData.length - 1) {
                         final LocalStorage storage = LocalStorage();

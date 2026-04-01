@@ -1,4 +1,6 @@
 // import 'package:flutter/material.dart';
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // Import GetX
 import 'package:saypay/core/component/text_actions.dart';

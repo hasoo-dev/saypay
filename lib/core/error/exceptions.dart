@@ -9,7 +9,7 @@ class AppException implements Exception {
 }
 
 class AuthException extends AppException {
-  AuthException(String message, {String? code}) : super(message, code: code);
+  AuthException(super.message, {super.code});
 }
 
 class ServerException extends AppException {

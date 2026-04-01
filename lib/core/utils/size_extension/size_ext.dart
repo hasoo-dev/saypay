@@ -18,9 +18,9 @@ extension SizeExtension on num {
 
   // Professional Vertical Spacer
   // Usage: 0.02.vSpace
-  Widget get vSpace => SizedBox(height: this.h);
+  Widget get vSpace => SizedBox(height: h);
 
   // Professional Horizontal Spacer
   // Usage: 0.02.hSpace
-  Widget get hSpace => SizedBox(width: this.w);
+  Widget get hSpace => SizedBox(width: w);
 }

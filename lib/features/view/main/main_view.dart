@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:saypay/core/utils/ui_utils/ui_utils.dart';
 import 'package:saypay/features/view/main/home_view.dart';
@@ -17,7 +19,7 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     
     return Scaffold(
        backgroundColor: Colors.transparent,

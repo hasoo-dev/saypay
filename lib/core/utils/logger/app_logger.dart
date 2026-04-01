@@ -1,4 +1,8 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:developer' as developer;
+
+import 'package:flutter/material.dart';
 
 class AppLogger {
   // ANSI Color Codes for Terminal Output
@@ -40,6 +44,6 @@ class AppLogger {
     // developer.log is better for large strings and doesn't clutter production as much
     developer.log(message, name: 'Spendly');
     // Also print to console during development for immediate feedback
-    print(message); 
+    debugPrint(message); 
   }
 }

@@ -17,7 +17,7 @@ class AppErrorWidget extends StatelessWidget {
     Get.snackbar(
       title ?? 'Error',
       message,
-      backgroundColor: Colors.redAccent.withOpacity(0.1),
+      backgroundColor: Colors.redAccent.withValues(alpha: 0.1),
       colorText: Colors.red[900],
       icon: Icon(Icons.error_outline, color: Colors.red[900]),
       snackPosition: SnackPosition.BOTTOM,

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -74,4 +76,4 @@ class ProfileServices extends GetxController {
       AppErrorWidget.show(message: "Could not upload image. Error: $e");
     }
   }
-}
+}

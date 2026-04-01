@@ -61,7 +61,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withValues(alpha: 0.2),
                     ),
                   ),
                   SizedBox(height: 12),
@@ -107,7 +107,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                                   emailController.text.trim(),
                                 );
                               } else {
-                                print("Form has errors.");
+                                debugPrint("Form has errors.");
                               }
                             },
                           ),

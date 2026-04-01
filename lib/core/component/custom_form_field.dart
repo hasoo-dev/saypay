@@ -43,12 +43,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
       ),
       child: TextFormField(
         controller: widget.controller,
         // 2. Use the state variable here
         validator: widget.validator,
+        onTapOutside: (event) {
+          FocusScope.of(context).unfocus();
+        },
         obscureText: _obscureText,
         textInputAction: widget.action,
         keyboardType: widget.keyword,
@@ -57,7 +60,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         decoration: InputDecoration(
           labelText: widget.label,
           labelStyle: TextStyle(
-            color: Colors.grey.withOpacity(0.6),
+            color: Colors.grey.withValues(alpha: 0.6),
             fontSize: 14,
           ),
           prefixIcon: Icon(widget.prefixIcon, color: const Color(0xFF5A7363)),
@@ -69,7 +72,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     _obscureText
                         ? Icons.visibility_outlined
                         : Icons.visibility_off_outlined,
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.grey.withValues(alpha: 0.5),
                   ),
                   onPressed: () {
                     // 4. Update the state to rebuild the UI

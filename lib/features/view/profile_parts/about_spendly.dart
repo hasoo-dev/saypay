@@ -1,9 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/const/app_constant.dart';
 import '../../../core/utils/size_extension/size_ext.dart';
-import '../main/widget/profile_menu_item.dart';
+ 
 
 class AboutSpendly extends StatefulWidget {
   const AboutSpendly({super.key});

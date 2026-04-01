@@ -1,6 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saypay/core/routes/routes_constant.dart';
+
 
 class RegistrationSuccessSheet extends StatelessWidget {
   const RegistrationSuccessSheet({super.key});

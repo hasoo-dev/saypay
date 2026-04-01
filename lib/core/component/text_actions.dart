@@ -39,7 +39,7 @@ class TextActions extends StatelessWidget {
           boxShadow: [
             if (background != Colors.transparent)
               BoxShadow(
-                color: background.withOpacity(0.3),
+                color: background.withValues(alpha: 0.3),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
