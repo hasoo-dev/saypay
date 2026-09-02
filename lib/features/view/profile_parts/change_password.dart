@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:saypay/core/component/custom_form_field.dart';
 import 'package:saypay/core/component/text_actions.dart';
 import 'package:saypay/core/utils/size_extension/size_ext.dart';
@@ -93,14 +94,14 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.arrow_back_ios_new, size: 20.sp),
+            child: Icon(Icons.arrow_back_ios_new, size: 20),
           ),
         ),
       ),
       body: SafeArea(
         child: Stack(
           children:[ SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 26.sp),
+            padding: EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,10 +144,10 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 TextActions(
                   title: _isLoading ? "Updating..." : "Update Password",
                   onTap: _isLoading ? null : _updatePassword,
-                  titleColor: Colors.black,
+                  titleColor: theme.colorScheme.onPrimary,
                   weight: FontWeight.w800,
                   fontSize: 19,
-                  background: theme.scaffoldBackgroundColor,
+                  background: theme.colorScheme.primaryFixed,
                 ),
               ],
             )

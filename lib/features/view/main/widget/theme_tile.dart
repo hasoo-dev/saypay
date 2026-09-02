@@ -84,10 +84,10 @@ class ThemeTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: Theme.of(context).colorScheme.primaryFixed,
                       letterSpacing: 0.2,
                     ),
                   ),

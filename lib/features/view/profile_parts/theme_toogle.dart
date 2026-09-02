@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import '../../../core/utils/size_extension/size_ext.dart';
 import '../main/widget/theme_tile.dart';
@@ -51,7 +52,7 @@ class _ThemeToogleState extends State<ThemeToogle> {
         leading: GestureDetector(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.arrow_back_ios_new, color: Colors.black87, size: 20),
+            child: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.primaryFixed, size: 20),
           ),
           onTap: () => Get.back(),
         ),
@@ -68,7 +69,7 @@ class _ThemeToogleState extends State<ThemeToogle> {
                 style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                   fontSize: 38,
                   fontWeight: FontWeight.w800,
-                  color: Colors.black87,
+                  color: Theme.of(context).colorScheme.primary,
                   letterSpacing: -1,
                 ),
               ),

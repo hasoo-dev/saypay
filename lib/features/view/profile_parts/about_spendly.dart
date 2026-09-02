@@ -1,8 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+ 
 import '../../../core/const/app_constant.dart';
 import '../../../core/utils/size_extension/size_ext.dart';
  
@@ -27,9 +28,9 @@ class _AboutSpendlyState extends State<AboutSpendly> {
         scrolledUnderElevation: 0,
         leading: GestureDetector(
           onTap: () => Get.back(),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.arrow_back_ios_new, color: Colors.black87, size: 20),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.primaryFixed, size: 20),
           ),
         ),
       ),

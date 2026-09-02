@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:saypay/core/utils/size_extension/size_ext.dart';
 import 'package:saypay/core/utils/ui_utils/ui_utils.dart';
 import 'package:saypay/features/view/main/home_view.dart';
 
@@ -19,19 +20,16 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-    
     return Scaffold(
-       backgroundColor: Colors.transparent,
-       extendBody: true,
+      extendBody: true,
+      // resizeToAvoidBottomInset: true,
+
+      backgroundColor: Colors.transparent,
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Home Icon Button
-          _buildNavItem(
-            index: 0,
-            iconPath: "assets/icons/ic_home_black.png",
-          ),
+          _buildNavItem(index: 0, iconPath: "assets/icons/ic_home_black.png"),
           _buildMicButton(),
           // Profile Icon Button
           _buildNavItem(
@@ -41,6 +39,7 @@ class _MainViewState extends State<MainView> {
         ],
       ),
       body: IndexedStack(
+
         index: _selectedIndex,
         children: [
           // const Center(child: Text("Home")),
@@ -63,53 +62,57 @@ class _MainViewState extends State<MainView> {
         });
       },
       child: Container(
-        // height: 47,
-        // width: 34,
-        padding: const EdgeInsets.symmetric(horizontal: 6,vertical: 14),
-        margin: const EdgeInsets.symmetric(vertical: 17,horizontal: 2),
+       
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 14),
+        margin: const EdgeInsets.symmetric(vertical: 17, horizontal: 2),
         decoration: BoxDecoration(
           // Change background to black if selected, else keep transparent/white
-          color: isSelected ? Colors.black : Colors.grey.shade600,
-           borderRadius: BorderRadius.circular(33)
+          color: isSelected ? Theme.of(context).colorScheme.primaryFixed : Colors.grey.shade600,
+          shape: BoxShape.circle,
+          border: Border.all(
+            width: 1,
+            color: Colors.grey.shade500
+          )
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Image.asset(
             iconPath,
-            height: isSelected ? 42 : 42,
+            height: isSelected ? 22 : 22,
             // Change image color to white if selected, else keep black
-            color: isSelected ? Colors.white : Colors.white,
+            color: isSelected ?Theme.of(context).colorScheme.secondaryContainer :Colors.grey.shade100,
           ),
         ),
       ),
     );
   }
+
   Widget _buildMicButton() {
-  return GestureDetector(
-    onTap: () {
-      // Add your Microphone/Voice logic here
-       UiUtils.showFlushbar(context, "Mic tapped", isError: false);
-    },
-    child: Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        // Semi-green background
-        color: const Color(0xFF4CAF50).withOpacity(0.8), 
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF4CAF50).withOpacity(0.3),
-            blurRadius: 10,
-            spreadRadius: 2,
-          )
-        ],
+    return GestureDetector(
+      onTap: () {
+        // Add your Microphone/Voice logic here
+        UiUtils.showFlushbar(context, "Mic tapped", isError: false);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          // Semi-green background
+          color: const Color(0xFF4CAF50).withOpacity(0.8),
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF4CAF50).withOpacity(0.3),
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: Image.asset(
+          "assets/icons/ic_microphone.png", // Or use Image.asset("assets/icons/ic_mic.png")
+          color: Colors.white,
+          height: 45,
+        ),
       ),
-      child:   Image.asset(
-        "assets/icons/ic_microphone.png", // Or use Image.asset("assets/icons/ic_mic.png")
-        color: Colors.white,
-        height: 45,
-      ),
-    ),
-  );
-}
+    );
+  }
 }

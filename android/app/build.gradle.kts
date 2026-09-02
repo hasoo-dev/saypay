@@ -28,26 +28,6 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-
-        manifestPlaceholders["appName"] = "Spendly"
-    }
-
-    flavorDimensions.add("environment")
-    productFlavors {
-        create("dev") {
-            dimension = "environment"
-            applicationIdSuffix = ".dev"
-            manifestPlaceholders["appName"] = "Spendly Dev"
-        }
-        create("staging") {
-            dimension = "environment"
-            applicationIdSuffix = ".staging"
-            manifestPlaceholders["appName"] = "Spendly Staging"
-        }
-        create("prod") {
-            dimension = "environment"
-            manifestPlaceholders["appName"] = "Spendly"
-        }
     }
 
     buildTypes {

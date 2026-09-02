@@ -53,23 +53,43 @@ class AuthService extends GetxController {
         AppLogger.debug('Credentials loaded successfully', tag: 'AUTH_SERVICE');
       }
     } catch (e) {
-      AppLogger.error('Error loading secure storage', error: e, tag: 'AUTH_SERVICE');
+      AppLogger.error(
+        'Error loading secure storage',
+        error: e,
+        tag: 'AUTH_SERVICE',
+      );
     }
   }
 
   Future<void> handleRememberMe() async {
     try {
       if (isRememberMe.value) {
-        AppLogger.debug('Writing credentials to secure storage', tag: 'AUTH_SERVICE');
-        await _secureStorage.write(key: 'email', value: emailController.text.trim());
-        await _secureStorage.write(key: 'password', value: passwordController.text);
+        AppLogger.debug(
+          'Writing credentials to secure storage',
+          tag: 'AUTH_SERVICE',
+        );
+        await _secureStorage.write(
+          key: 'email',
+          value: emailController.text.trim(),
+        );
+        await _secureStorage.write(
+          key: 'password',
+          value: passwordController.text,
+        );
       } else {
-        AppLogger.debug('Clearing credentials from secure storage', tag: 'AUTH_SERVICE');
+        AppLogger.debug(
+          'Clearing credentials from secure storage',
+          tag: 'AUTH_SERVICE',
+        );
         await _secureStorage.delete(key: 'email');
         await _secureStorage.delete(key: 'password');
       }
     } catch (e) {
-      AppLogger.error('Error during handleRememberMe', error: e, tag: 'AUTH_SERVICE');
+      AppLogger.error(
+        'Error during handleRememberMe',
+        error: e,
+        tag: 'AUTH_SERVICE',
+      );
     }
   }
 
@@ -81,8 +101,10 @@ class AuthService extends GetxController {
 
     try {
       isLoading.value = true;
-      AppLogger.info('Starting login process for ${emailController.text}', tag: 'LOGIN');
-
+      AppLogger.info(
+        'Starting login process for ${emailController.text}',
+        tag: 'LOGIN',
+      );
       await handleRememberMe();
 
       final user = await _authRepository.signInWithEmail(
@@ -105,7 +127,9 @@ class AuthService extends GetxController {
     } catch (e) {
       AppLogger.error('Unexpected error during login', error: e, tag: 'LOGIN');
       if (context.mounted) {
-        AppErrorWidget.show(message: "An unexpected error occurred. Please try again.");
+        AppErrorWidget.show(
+          message: "An unexpected error occurred. Please try again.",
+        );
       }
     } finally {
       isLoading.value = false;
@@ -120,21 +144,36 @@ class AuthService extends GetxController {
       final user = await _authRepository.signInWithGoogle();
 
       await _session.saveUser(user);
-      AppLogger.success('Google login successful, user persisted', tag: 'GOOGLE_AUTH');
-
+      AppLogger.success(
+        'Google login successful, user persisted',
+        tag: 'GOOGLE_AUTH',
+      );
       if (context.mounted) {
-        UiUtils.showFlushbar(context, "Welcome ${user.fullName ?? 'to Spendly'}", isError: false);
+        UiUtils.showFlushbar(
+          context,
+          "Welcome ${user.fullName ?? 'to Spendly'}",
+          isError: false,
+        );
         Get.offAllNamed(RoutesConstant.main);
       }
     } on AuthException catch (e) {
-      AppLogger.warning('Google login failed: ${e.message}', tag: 'GOOGLE_AUTH');
+      AppLogger.warning(
+        'Google login failed: ${e.message}',
+        tag: 'GOOGLE_AUTH',
+      );
       if (context.mounted) {
         AppErrorWidget.show(message: e.message);
       }
     } catch (e) {
-      AppLogger.error('Unexpected error during Google login', error: e, tag: 'GOOGLE_AUTH');
+      AppLogger.error(
+        'Unexpected error during Google login',
+        error: e,
+        tag: 'GOOGLE_AUTH',
+      );
       if (context.mounted) {
-        AppErrorWidget.show(message: "An unexpected error occurred during Google Sign-In.");
+        AppErrorWidget.show(
+          message: "An unexpected error occurred during Google Sign-In.",
+        );
       }
     } finally {
       isLoading.value = false;
@@ -143,13 +182,19 @@ class AuthService extends GetxController {
 
   Future<void> register(BuildContext context) async {
     if (!(formKey.currentState?.validate() ?? false)) {
-      AppLogger.warning('Register attempt failed: Validation error', tag: 'REGISTER');
+      AppLogger.warning(
+        'Register attempt failed: Validation error',
+        tag: 'REGISTER',
+      );
       return;
     }
 
     try {
       isLoading.value = true;
-      AppLogger.info('Starting registration for ${registerEmailController.text}', tag: 'REGISTER');
+      AppLogger.info(
+        'Starting registration for ${registerEmailController.text}',
+        tag: 'REGISTER',
+      );
 
       await _authRepository.signUpWithEmail(
         email: registerEmailController.text.trim(),
@@ -158,10 +203,10 @@ class AuthService extends GetxController {
       );
 
       AppLogger.success('Registration successful in Supabase', tag: 'REGISTER');
-      
+
       // Clear fields and show success sheet
       onClear();
-      
+
       if (context.mounted) {
         Get.bottomSheet(
           const RegistrationSuccessSheet(),
@@ -175,9 +220,15 @@ class AuthService extends GetxController {
         AppErrorWidget.show(message: e.message);
       }
     } catch (e) {
-      AppLogger.error('Unexpected error during registration', error: e, tag: 'REGISTER');
+      AppLogger.error(
+        'Unexpected error during registration',
+        error: e,
+        tag: 'REGISTER',
+      );
       if (context.mounted) {
-        AppErrorWidget.show(message: "Could not complete registration. ${e.toString()}");
+        AppErrorWidget.show(
+          message: "Could not complete registration. ${e.toString()}",
+        );
       }
     } finally {
       isLoading.value = false;
@@ -187,23 +238,39 @@ class AuthService extends GetxController {
   Future<void> sendPasswordReset(BuildContext context, String email) async {
     try {
       isLoading.value = true;
-      AppLogger.info('Starting password reset for $email', tag: 'FORGOT_PASSWORD');
+      AppLogger.info(
+        'Starting password reset for $email',
+        tag: 'FORGOT_PASSWORD',
+      );
 
       await _authRepository.resetPasswordForEmail(email: email);
 
       if (context.mounted) {
-        UiUtils.showFlushbar(context, 'Password reset link sent to $email', isError: false);
+        UiUtils.showFlushbar(
+          context,
+          'Password reset link sent to $email',
+          isError: false,
+        );
         Get.back();
       }
     } on AuthException catch (e) {
-      AppLogger.warning('Password reset failed: ${e.message}', tag: 'FORGOT_PASSWORD');
+      AppLogger.warning(
+        'Password reset failed: ${e.message}',
+        tag: 'FORGOT_PASSWORD',
+      );
       if (context.mounted) {
         AppErrorWidget.show(message: e.message);
       }
     } catch (e) {
-      AppLogger.error('Unexpected error during password reset', error: e, tag: 'FORGOT_PASSWORD');
+      AppLogger.error(
+        'Unexpected error during password reset',
+        error: e,
+        tag: 'FORGOT_PASSWORD',
+      );
       if (context.mounted) {
-        AppErrorWidget.show(message: 'Could not send reset link. Please try again.');
+        AppErrorWidget.show(
+          message: 'Could not send reset link. Please try again.',
+        );
       }
     } finally {
       isLoading.value = false;
@@ -214,14 +281,18 @@ class AuthService extends GetxController {
     try {
       isLoading.value = true;
       AppLogger.info('Starting logout process', tag: 'LOGOUT');
-      
+
       await _authRepository.signOut();
       await _session.logout();
-      
+
       Get.offAllNamed(RoutesConstant.login);
 
       if (context.mounted) {
-        UiUtils.showFlushbar(context, "Logged out successfully", isError: false);
+        UiUtils.showFlushbar(
+          context,
+          "Logged out successfully",
+          isError: false,
+        );
       }
       AppLogger.success('Logout complete', tag: 'LOGOUT');
     } catch (e) {
@@ -252,4 +323,3 @@ class AuthService extends GetxController {
     registerPasswordController.clear();
   }
 }
-

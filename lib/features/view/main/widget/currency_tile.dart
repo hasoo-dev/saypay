@@ -70,7 +70,7 @@ class CurrencyTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? Colors.white : Colors.black87,
+                  color: isSelected ? Colors.white :  Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -83,10 +83,10 @@ class CurrencyTile extends StatelessWidget {
                 children: [
                   Text(
                     currency['code']!,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color:  isSelected?  Theme.of(context).colorScheme.primaryFixed: Colors.grey.shade500  ,
                       letterSpacing: 0.5,
                     ),
                   ),

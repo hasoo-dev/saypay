@@ -2,7 +2,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Import GetX
+// Import GetX
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:saypay/core/component/text_actions.dart';
 import 'package:saypay/core/routes/routes_constant.dart';
 import 'package:saypay/core/utils/validation_extension/validation.dart';
@@ -18,19 +21,22 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     // Inject/Find the AuthService
     final authService = Get.find<AuthService>();
-
+ 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Form(
         key: authService.form, // Use key from service
         child: Column(
+          mainAxisAlignment: .center,
           children: [
             CustomTextField(
               controller:
                   authService.emailController, // Use controller from service
               label: "Email Address",
               prefixIcon: Icons.email_outlined,
-              validator: (value) => value.validateEmail(),
+              validator: (value) {
+                value.validateEmail();
+              },
             ),
 
             CustomTextField(
@@ -46,11 +52,14 @@ class LoginForm extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Obx(() => CustomCheckbox(
-                  label: "Remember me",
-                  initialState: authService.isRememberMe.value,
-                  onChanged: (value) => authService.isRememberMe.value = value,
-                )),
+                Obx(
+                  () => CustomCheckbox(
+                    label: "Remember me",
+                    initialState: authService.isRememberMe.value,
+                    onChanged: (value) =>
+                        authService.isRememberMe.value = value,
+                  ),
+                ),
 
                 InkWell(
                   onTap: () => Navigator.pushNamed(
@@ -67,10 +76,13 @@ class LoginForm extends StatelessWidget {
             TextActions(
               title: "Login",
               height: 54,
-              background: const Color(0xFFF4F4B7),
+              // background: const Color(0xFFF4F4B7),
+              background: Theme.of(context).cardColor,
               width: double.infinity,
               fontSize: 13,
-              titleColor: Colors.black,
+              titleColor: Theme.of(
+                context,
+              ).colorScheme.primaryFixed ,
               onTap: () {
                 // Call the login method from AuthService
                 // This will trigger the full-screen loader automatically
@@ -103,23 +115,16 @@ class LoginForm extends StatelessWidget {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SocialActionButton(
-                    title: "Google",
-                    iconPath: 'assets/icons/google.png',
-                    onTap: () => authService.signInWithGoogle(context),
-                  ),
-                  SocialActionButton(
-                    title: "Facebook",
-                    iconPath: 'assets/icons/facebook.png',
-                    onTap: () => debugPrint("Facebook Login Pressed"),
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SocialActionButton(
+                  title: "Google",
+                  iconPath: 'assets/icons/google.png',
+                  onTap: () => authService.signInWithGoogle(context),
+                ),
+                 
+              ],
             ),
           ],
         ),

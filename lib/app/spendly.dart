@@ -20,14 +20,14 @@ class Spendly extends StatelessWidget {
       // Theme Configuration
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       initialBinding: AppBinding(),
 
       // Routing Configuration (The GetX Way)
       initialRoute: RoutesConstant.splash,
       getPages: AppRoutes.routes, // This replaces onGenerateRoute
       // Default transition for a premium feel
-      defaultTransition: Transition.cupertino,
+      defaultTransition: Transition.fadeIn,
     );
   }
 }

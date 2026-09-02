@@ -10,18 +10,23 @@ ThemeData get darkTheme {
     primaryColor: AppColors.primary,
 
     fontFamily: 'lufga',
-    scaffoldBackgroundColor: Colors.black,
-    colorScheme: const ColorScheme.dark(
+    scaffoldBackgroundColor: const Color.fromARGB(95, 48, 46, 5),
+    colorScheme:  ColorScheme.dark(
       primaryFixed: Colors.white,
       onPrimary: AppColors.darkBackground,
       primary: AppColors.primary,
       secondary: AppColors.accent,
       surface: AppColors.darkSurface,
       onSurface: AppColors.darkText,
+      secondaryContainer: Colors.black,
       shadow: Colors.white,
+      onSecondary: AppColors.lightSecondaryText.withValues(alpha: 0.2),
+      scrim: AppColors.primary,
       error: AppColors.error,
       background: AppColors.darkBackground,
+      
     ),
+    cardColor: Colors.black,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.darkBackground,
       elevation: 0,

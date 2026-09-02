@@ -5,7 +5,6 @@ import 'package:get/get.dart'; // Added GetX import
 import 'package:saypay/features/widgets/login_form.dart';
 import 'package:saypay/features/widgets/register_form.dart';
 import 'package:saypay/core/const/app_constant.dart';
-
 import '../../../core/component/loading_loader.dart';
 import '../../../services/auth_services.dart/auth_services.dart';
 // Added AuthService import
@@ -19,7 +18,7 @@ class AuthView extends StatefulWidget {
 
 class _AuthViewState extends State<AuthView> {
   // Access the controller
-  final authController = Get.put(AuthService());
+  final authController = Get.find<AuthService>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +48,9 @@ class _AuthViewState extends State<AuthView> {
                                 .copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w700,
-                                  color: Colors.black,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.primaryFixed,
                                 ),
                           ),
                           const SizedBox(height: 12),
@@ -59,7 +60,9 @@ class _AuthViewState extends State<AuthView> {
                                 .copyWith(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,
-                                  color: Colors.black.withOpacity(0.2),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.primaryFixed.withOpacity(0.2),
                                 ),
                           ),
                           const SizedBox(height: 12),

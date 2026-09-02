@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:saypay/core/routes/routes_constant.dart';
+import 'package:get/get.dart';
 
 import '../session_controller/session_controller.dart';
 import '../storage/local_storage.dart' show LocalStorage;
@@ -8,7 +9,7 @@ import '../storage/local_storage.dart' show LocalStorage;
 
 class SplashServices {
   final LocalStorage _storage = LocalStorage();
-  final SessionController _sessionController = SessionController();
+  final SessionController _sessionController = Get.find<SessionController>();
 
   void navigateToNextScreen(BuildContext context) async {
     // 1. Initialize the session (Sync storage to memory)

@@ -1,5 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:saypay/core/utils/size_extension/size_ext.dart';
 import 'package:saypay/services/auth_services.dart/auth_services.dart';
 import 'package:saypay/services/session_controller/session_controller.dart';
@@ -18,20 +23,37 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final AuthService _authService = AuthService();
+  final AuthService _authService = Get.find<AuthService>();
   final CurrencyController _currencyController = Get.put(
     CurrencyController(),
     permanent: true,
   );
 
   @override
+  void initState() {
+    super.initState();
+    // Refresh user data when profile view loads
+    _refreshUserData();
+  }
+
+  void _refreshUserData() async {
+    try {
+      final sessionController = SessionController.to;
+      // Load user data from local storage to ensure latest values
+      await sessionController.getUserFromPreference();
+    } catch (e) {
+      print('Error refreshing user data: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final user = SessionController.userModel;
-    final userName = user?.fullName ?? "Unknown";
-    final userEmail = user?.email ?? "sofia@gmail.com";
+    final SessionController sessionController = Get.put(SessionController());
+
     final theme = Theme.of(context);
 
     return Scaffold(
+     
       backgroundColor: theme.colorScheme.onPrimary,
       body: SafeArea(
         child: Column(
@@ -39,67 +61,85 @@ class _ProfileViewState extends State<ProfileView> {
           children: [
             // --- FIXED HEADER SECTION ---
             0.02.vSpace,
-            Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 13),
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: theme.colorScheme.primary.withOpacity(0.2),
-                      width: 3,
+
+            Obx(() {
+              final avatar = sessionController.avatarUrl.value;
+              final userName = sessionController.fullName.value.isNotEmpty
+                  ? sessionController.fullName.value
+                  : "Unknown";
+              final userEmail = sessionController.email.value.isNotEmpty
+                  ? sessionController.email.value
+                  : "Unknown";
+
+              return Row(
+                
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 13),
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: theme.colorScheme.primary.withOpacity(0.2),
+                        width: 3,
+                      ),
                     ),
-                  ),
-                  child: Obx(
-                    () => CircleAvatar(
-                      radius: 66,
+                    child: CircleAvatar(
+                      radius: 44,
                       backgroundColor: Colors.grey.shade200,
-                      backgroundImage:
-                          SessionController.to.avatarUrl.value.isNotEmpty
-                          ? NetworkImage(SessionController.to.avatarUrl.value)
+                      // ✅ Now reads from reactive value — updates instantly
+                      backgroundImage: avatar.isNotEmpty
+                          ? NetworkImage(avatar)
                           : const AssetImage(AppConstant.profile)
                                 as ImageProvider,
                     ),
                   ),
-                ),
-                0.04.hSpace,
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      userName,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        userEmail,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w500,
+                  0.04.hSpace,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userName,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primaryFixed,
+                          fontSize: 22,
+
+                          
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                      const SizedBox(height: 4),
+                      FittedBox(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.scrim,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            userEmail,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.primaryFixed,
+                              fontWeight: FontWeight.w500,
+
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }),
             0.02.vSpace,
 
             // --- SCROLLABLE MENU SECTION ---

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:saypay/core/utils/size_extension/size_ext.dart';
 
 import '../../../services/profile_services/currency_controller.dart';
@@ -39,7 +42,7 @@ class _CurrencyState extends State<Currency> {
           onTap: () => Get.back(),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.arrow_back_ios_new, color: Colors.black87,size: 20,),
+            child: Icon(Icons.arrow_back_ios_new, color:  Theme.of(context).colorScheme.primaryFixed,size: 20,),
           ),
         ),
       ),
@@ -58,7 +61,7 @@ class _CurrencyState extends State<Currency> {
                       style: theme.textTheme.headlineLarge!.copyWith(
                         fontSize: 38,
                         fontWeight: FontWeight.w800,
-                        color: Colors.black87,
+                        color:  Theme.of(context).colorScheme.primary,
                         letterSpacing: -1,
                       ),
                     ),

@@ -5,34 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Spendly (Development)",
+            "name": "Spendly",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main_dev.dart",
-            "args": [
-                "--flavor",
-                "dev"
-            ]
-        },
-        {
-            "name": "Spendly (Staging)",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main_staging.dart",
-            "args": [
-                "--flavor",
-                "staging"
-            ]
-        },
-        {
-            "name": "Spendly (Production)",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main_prod.dart",
-            "args": [
-                "--flavor",
-                "prod"
-            ]
+            "program": "lib/main.dart"
         }
     ]
 }

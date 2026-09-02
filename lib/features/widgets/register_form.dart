@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+ 
 import 'package:saypay/core/utils/size_extension/size_ext.dart';
 import 'package:saypay/core/utils/validation_extension/validation.dart';
 import 'package:saypay/services/auth_services.dart/auth_services.dart';
@@ -55,10 +57,12 @@ class _RegisterFormState extends State<RegisterForm> {
             TextActions(
               title: "Register",
               height: 54,
-              background: const Color.fromARGB(255, 244, 244, 183),
+              background: Theme.of(context).cardColor,
               width: double.infinity,
               fontSize: 13,
-              titleColor: Colors.black,
+              titleColor: Theme.of(
+                context,
+              ).colorScheme.primaryFixed,
               onTap: () {
                 authServices.register(context);
               },

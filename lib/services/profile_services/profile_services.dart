@@ -33,47 +33,45 @@ class ProfileServices extends GetxController {
   }
 
   Future<void> saveAndContinue(BuildContext context) async {
-    if (selectedFile.value == null) {
-      if (SessionController.userModel != null) {
-        await SessionController().saveUser(SessionController.userModel!);
-      }
-      Get.back();
-      return;
+  if (selectedFile.value == null) {
+    if (SessionController.userModel != null) {
+      await SessionController.to.saveUser(SessionController.userModel!); // ✅
     }
-
-    isUploading.value = true;
-
-    try {
-      final user = SessionController.userModel;
-      if (user == null) throw AuthException('No user session found');
-
-      final publicUrl = await ProfileRepositry().uploadProfileImage(
-        selectedFile.value!,
-        user.id,
-      );
-
-      final updatedUser = user.copyWith(avatarUrl: publicUrl);
-      await SessionController().saveUser(updatedUser);
-
-      isUploading.value = false;
-
-      // Show flushbar
-      UiUtils.showFlushbar(
-        context,
-        "Profile photo updated successfully!",
-        isError: false,
-      );
-
-      // Wait for flushbar to be visible then go back
-      await Future.delayed(const Duration(seconds: 2));
-      Get.back();
-
-    } on AuthException catch (e) {
-      isUploading.value = false;
-      AppErrorWidget.show(message: e.message);
-    } catch (e) {
-      isUploading.value = false;
-      AppErrorWidget.show(message: "Could not upload image. Error: $e");
-    }
+    Get.back();
+    return;
   }
+
+  isUploading.value = true;
+
+  try {
+    final user = SessionController.userModel;
+    if (user == null) throw AuthException('No user session found');
+
+    final publicUrl = await ProfileRepositry().uploadProfileImage(
+      selectedFile.value!,
+      user.id,
+    );
+
+    final updatedUser = user.copyWith(avatarUrl: publicUrl);
+    await SessionController.to.saveUser(updatedUser); // ✅
+
+    isUploading.value = false;
+
+    UiUtils.showFlushbar(
+      context,
+      "Profile photo updated successfully!",
+      isError: false,
+    );
+
+    await Future.delayed(const Duration(seconds: 2));
+    Get.back();
+
+  } on AuthException catch (e) {
+    isUploading.value = false;
+    AppErrorWidget.show(message: e.message);
+  } catch (e) {
+    isUploading.value = false;
+    AppErrorWidget.show(message: "Could not upload image. Error: $e");
+  }
+}
 }

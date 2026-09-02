@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:saypay/core/component/text_actions.dart';
 import 'package:saypay/core/utils/size_extension/size_ext.dart';
 
@@ -33,13 +36,13 @@ class _EditProfileViewState extends State<EditProfileView> {
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.arrow_back_ios_new, size: 20.sp),
+            child: Icon(Icons.arrow_back_ios_new, size: 20),
           ),
         ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 26.sp),
+          padding: EdgeInsets.symmetric(horizontal: 26),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +68,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                 child: Stack(
                   children: [
                     Obx(() => CircleAvatar(
-                          radius: 165.sp,
+                          radius: 165,
                           backgroundColor: Colors.grey.shade200,
                           backgroundImage: _profileServices.selectedFile.value != null
                               ? FileImage(_profileServices.selectedFile.value!) as ImageProvider
@@ -84,12 +87,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                       child: Obx(() => GestureDetector(
                             onTap: _profileServices.isUploading.value ? null : _profileServices.pickImage,
                             child: CircleAvatar(
-                              radius: 20.sp,
-                              backgroundColor: Colors.black,
+                              radius: 20,
+                              backgroundColor: theme.colorScheme.primaryFixed,
                               child: _profileServices.isUploading.value
                                   ? SizedBox(
-                                      width: 20.sp,
-                                      height: 20.sp,
+                                      width: 20,
+                                      height: 20,
                                       child: const CircularProgressIndicator(
                                         color: Colors.white,
                                         strokeWidth: 2,
@@ -97,8 +100,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                     )
                                   : Icon(
                                       Icons.edit,
-                                      color: theme.colorScheme.onPrimary,
-                                      size: 20.sp,
+                                      color: theme.cardColor,
+                                      size: 20,
                                     ),
                             ),
                           )),
@@ -110,10 +113,10 @@ class _EditProfileViewState extends State<EditProfileView> {
               Obx(() => TextActions(
                     title: _profileServices.isUploading.value ? "Uploading..." : "Continue",
                     onTap: _profileServices.isUploading.value ? null : () => _profileServices.saveAndContinue(context),
-                    titleColor: Colors.black,
+                    titleColor:theme.colorScheme.onPrimary,
                     weight: FontWeight.w800,
                     fontSize: 19,
-                    background: theme.scaffoldBackgroundColor,
+                    background: theme.colorScheme.primaryFixed,
                   )),
             ],
           ),

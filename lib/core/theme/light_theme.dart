@@ -16,12 +16,15 @@ ThemeData get lightTheme {
       primary: ThemeConfig.primary,
       primaryContainer: ThemeConfig.primarySoft,
       secondary: ThemeConfig.accent,
-      secondaryContainer: ThemeConfig.accentSoft,
+      secondaryContainer: Colors.white,
       tertiaryContainer: ThemeConfig.purpleGlow,
       surface: ThemeConfig.lightSurface,
       onSurface: ThemeConfig.lightText,
+      scrim: Colors.black12,
+      onSecondary: Colors.grey.shade100,
       error: ThemeConfig.error,
     ),
+     cardColor:  Color(0xFFF4F4B7),
     appBarTheme: AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,

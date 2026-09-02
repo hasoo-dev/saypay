@@ -23,7 +23,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).cardColor,
       body: FadeIn(
         delay: Duration(seconds: 2),
         duration: Duration(seconds: 2),
